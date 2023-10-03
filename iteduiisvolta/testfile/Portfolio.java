@@ -6,25 +6,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Negozio {
-	private ArrayList<Prodotto> elencoProdotti=new ArrayList<Prodotto>();
-	
-	public void aggiungiProdotto(Prodotto p) {
-		if (p.getPrezzo()>0 && p.getQuantità()>0 && p.getDescrizione().length()>0) {
-			elencoProdotti.add(p);
-		}
-		
+public class Portfolio {
+    private ArrayList <Clienti> elencoClienti=new ArrayList<Clienti>();
+
+    public void aggiungiCliente(Clienti c) {		
+			elencoClienti.add(c);
 	}
-	
-	public void salva(String nomeFile) {
+
+    public void salva(String nomeFile) {
 		//*****  SCRITTURA SU UN FILE *****
 		try {
-			FileWriter fw=new FileWriter(nomeFile);	//crea un file di nome prodotti.txt
-			for(Prodotto p:elencoProdotti)
-				fw.write(	//scrivo una riga di prodotto per ogni elemento della lista
-					p.getDescrizione()+";"+
-					p.getPrezzo()+";"+
-					p.getQuantità()+"\n"
+			FileWriter fw=new FileWriter(nomeFile);	//crea un file di nome clienti.txt
+			for(Clienti c:elencoClienti)
+				fw.write(	//scrivo una riga di clienti per ogni elemento della lista
+					c.getNumero()+";"+
+					c.getNome()+";"+
+					c.getCognome()+"\n"
 					);			
 			fw.close();					//chiude il file	
 			System.out.println("File correttamente creato");
@@ -33,8 +30,8 @@ public class Negozio {
 			e.printStackTrace();
 		}
 	}
-	
-	public void carica(String nomeFile) {
+
+    public void carica(String nomeFile) {
 		//*****  LETTURA DA UN FILE *****
 		File f=new File(nomeFile);
 		String[] dati;
@@ -44,11 +41,11 @@ public class Negozio {
 			while (sc.hasNextLine()) { //ripeti finché ci sono righe da leggere
 				riga=sc.nextLine();		//leggi una riga dal file
 				dati=riga.split(";");	//divide la stringa in più pezzi usando il carattere ";" come separatore
-				Prodotto p=new Prodotto();
-				p.setDescrizione(dati[0]);
-				p.setPrezzo(Double.parseDouble(dati[1]));
-				p.setQuantità(Integer.parseInt(dati[2]));
-				elencoProdotti.add(p);		//aggiungo il prodotto alla lista
+				Clienti c=new Clienti();
+				c.setNumero(Integer.parseInt(dati[0]));
+				c.setNome((dati[1]));
+				c.setCognome((dati[2]));
+				elencoClienti.add(c);		//aggiungo il cliente alla lista
 			}
 			sc.close();  //chiudi il file
 			System.out.println("\n\nLettura terminata.");
@@ -58,7 +55,8 @@ public class Negozio {
 		}
 	}
 
-	public Iterable<Prodotto> elencoProdotti (){ // restituisce una versione in sola lettura (Iterable) della lista
-		return this.elencoProdotti();
+    public Iterable<Clienti> elencoClienti (){ // restituisce una versione in sola lettura (Iterable) della lista
+		return this.elencoClienti;
 	}
- }
+
+}
